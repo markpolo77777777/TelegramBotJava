@@ -145,7 +145,7 @@ public class CheckUTime  extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "1372487738:AAFPRZcvTq2RKQu5yHn2kbZ3GcsAsELNOto";
+        return "token";
     }
 }
 
