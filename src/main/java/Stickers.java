@@ -27,9 +27,9 @@ public class Stickers extends TelegramLongPollingBot {
             String text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
-            if(text.startsWith(String.valueOf(sb.append("/event").append(textL)))) {
+            if(text.equals("/event")) {
 
-                SendMessage send = new SendMessage().setChatId(chat_id).setText(textL);
+                SendMessage send = new SendMessage().setChatId(chat_id).setText("smth");
 
                 InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
