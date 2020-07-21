@@ -115,9 +115,6 @@ public class Stickers extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "867439913:AAH9ZX7dC1FItEZI8DD3aAeN9MzlzQdhVW8";
+        return "token";
     }
 }
-
-//// ride it - regard
-/// !chatIDsURL.contains(update.getMessage().getChatId())
