@@ -1,3 +1,5 @@
+package com.telegabot.tut;
+
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
@@ -115,6 +117,6 @@ public class Stickers extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "token";
+        return "867439913:AAH9ZX7dC1FItEZI8DD3aAeN9MzlzQdhVW8";
     }
 }

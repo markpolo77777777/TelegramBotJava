@@ -17,8 +17,8 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>main.java.Main</mainClass>
-                            <name>TelegaB</name>
+                            <mainClass>com.telegabot.tut.Main</mainClass>
+                            <name>Telegab</name>
                         </program>
                     </programs>
                 </configuration>
