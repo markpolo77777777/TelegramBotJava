@@ -1,5 +1,10 @@
 package com.telegabot.tut;
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
@@ -10,6 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import static java.lang.Math.toIntExact;
 
@@ -17,15 +23,16 @@ public class Stickers extends TelegramLongPollingBot {
     private int count = 0;
     private int countM = 0;
     private String textL = "smth";
-   //private final ArrayList<Long> chatIDsURL = new ArrayList<>();
 
     @Override
     public void onUpdateReceived(Update update) {
-        //update.getUpdateId();
-        StringBuilder sb = new StringBuilder();
 
         if(update.hasMessage() && update.getMessage().hasText()) {
 
+            String user_first_name = update.getMessage().getChat().getFirstName();
+            String user_last_name = update.getMessage().getChat().getLastName();
+            String user_username = update.getMessage().getChat().getUserName();
+            long user_id = update.getMessage().getChat().getId();
             String text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
@@ -50,7 +57,7 @@ public class Stickers extends TelegramLongPollingBot {
 
                 try {
                     execute(send);
-                   //chatIDsURL.add(update.getMessage().getChatId());
+                    check(user_first_name, user_last_name, toIntExact(user_id), user_username);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
@@ -62,7 +69,6 @@ public class Stickers extends TelegramLongPollingBot {
                 try {
                     sendMessage.setText(textL);
                     execute(sendMessage);
-                    //chatIDsURL.add(update.getMessage().getChatId());
                 }
                 catch(TelegramApiException e){
                     e.printStackTrace();
@@ -87,7 +93,6 @@ public class Stickers extends TelegramLongPollingBot {
 
                 try {
                     execute(edit);
-                   //chatIDsURL.add(update.getMessage().getChatId());
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
@@ -102,11 +107,40 @@ public class Stickers extends TelegramLongPollingBot {
 
                 try {
                     execute(edit);
-                    //chatIDsURL.add(update.getMessage().getChatId());
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private String check(String first_name, String last_name, int user_id, String username) {
+
+        java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.OFF);
+
+        MongoClientURI connectionString = new MongoClientURI("mongodb://new_user_1:1q2w3e4r5t6yQ@tutorial-shard-00-00.ickxg.mongodb.net:27017,tutorial-shard-00-01.ickxg.mongodb.net:27017,tutorial-shard-00-02.ickxg.mongodb.net:27017/Tutorial?ssl=true&replicaSet=atlas-14253y-shard-0&authSource=admin&retryWrites=true&w=majority");
+
+        MongoClient mongoClient = new MongoClient(connectionString);
+
+        MongoDatabase database = mongoClient.getDatabase("Tutorial");
+
+        MongoCollection<Document> collection = database.getCollection("users");
+
+        long found = collection.count(Document.parse("{id : " + user_id + "}"));
+
+        if (found == 0) {
+            Document doc = new Document("first_name", first_name)
+                    .append("last_name", last_name)
+                    .append("id", user_id)
+                    .append("username", username);
+            collection.insertOne(doc);
+            mongoClient.close();
+            System.out.println("User not exists in database. Written.");
+            return "no_exists";
+        } else {
+            System.out.println("User exists in database.");
+            mongoClient.close();
+            return "exists";
         }
     }
 
