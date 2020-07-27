@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>Telegab</artifactId>
+    <artifactId>TelegramBotJava</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -18,7 +18,7 @@
                     <programs>
                         <program>
                             <mainClass>com.telegabot.tut.Main</mainClass>
-                            <name>Telegab</name>
+                            <name>TelegramBotJava</name>
                         </program>
                     </programs>
                 </configuration>
