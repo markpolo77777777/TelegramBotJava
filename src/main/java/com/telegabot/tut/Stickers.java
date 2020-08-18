@@ -118,7 +118,7 @@ public class Stickers extends TelegramLongPollingBot {
 
         java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.OFF);
 
-        MongoClientURI connectionString = new MongoClientURI("mongodb://new_user_1:1q2w3e4r5t6yQ@tutorial-shard-00-00.ickxg.mongodb.net:27017,tutorial-shard-00-01.ickxg.mongodb.net:27017,tutorial-shard-00-02.ickxg.mongodb.net:27017/Tutorial?ssl=true&replicaSet=atlas-14253y-shard-0&authSource=admin&retryWrites=true&w=majority");
+        MongoClientURI connectionString = new MongoClientURI("mingodb");
 
         MongoClient mongoClient = new MongoClient(connectionString);
 
