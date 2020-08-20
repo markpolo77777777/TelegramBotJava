@@ -114,17 +114,17 @@ public class Stickers extends TelegramLongPollingBot {
         }
     }
 
-    private String check(String first_name, String last_name, int user_id, String username) {
+    private void check(String first_name, String last_name, int user_id, String username) {
 
         java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.OFF);
 
-        MongoClientURI connectionString = new MongoClientURI("mingodb");
+        MongoClientURI connectionString = new MongoClientURI("Your mongoDB password");
 
         MongoClient mongoClient = new MongoClient(connectionString);
 
-        MongoDatabase database = mongoClient.getDatabase("Tutorial");
+        MongoDatabase database = mongoClient.getDatabase("Your Database");
 
-        MongoCollection<Document> collection = database.getCollection("users");
+        MongoCollection<Document> collection = database.getCollection("Your user");
 
         long found = collection.count(Document.parse("{id : " + user_id + "}"));
 
@@ -136,11 +136,9 @@ public class Stickers extends TelegramLongPollingBot {
             collection.insertOne(doc);
             mongoClient.close();
             System.out.println("User not exists in database. Written.");
-            return "no_exists";
         } else {
             System.out.println("User exists in database.");
             mongoClient.close();
-            return "exists";
         }
     }
 
